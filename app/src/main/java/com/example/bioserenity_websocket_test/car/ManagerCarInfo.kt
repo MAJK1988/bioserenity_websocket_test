@@ -2,11 +2,10 @@ package com.example.bioserenity_websocket_test.car
 
 import androidx.compose.runtime.MutableState
 import com.example.bioserenity_websocket_test.connection.ManagerConnection
-import com.example.bioserenity_websocket_test.message.MessageReceiver
-import com.example.bioserenity_websocket_test.message.NameCar
+import com.example.bioserenity_websocket_test.utils.MessageReceiver
 import com.example.bioserenity_websocket_test.utils.TestLog
 
-import com.example.bioserenity_websocket_test.message.getCar
+import com.example.bioserenity_websocket_test.utils.getCar
 import com.example.bioserenity_websocket_test.utils.Constant
 import com.example.bioserenity_websocket_test.websockt.ClientSocket
 

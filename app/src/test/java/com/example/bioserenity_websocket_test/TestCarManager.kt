@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import com.example.bioserenity_websocket_test.car.ManagerCarInfo
 import com.example.bioserenity_websocket_test.car.Car
 import com.example.bioserenity_websocket_test.connection.ManagerConnection
-import com.example.bioserenity_websocket_test.message.MessageReceiver
+import com.example.bioserenity_websocket_test.utils.MessageReceiver
 import com.example.bioserenity_websocket_test.utils.Constant
 import com.example.bioserenity_websocket_test.websockt.ClientSocket
 import org.junit.Before

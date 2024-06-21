@@ -1,7 +1,5 @@
-package com.example.bioserenity_websocket_test.message
+package com.example.bioserenity_websocket_test.utils
 
-import com.example.bioserenity_websocket_test.car.Car
-import com.example.bioserenity_websocket_test.utils.TestLog
 import com.google.gson.Gson
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -24,7 +22,6 @@ data class MessageReceiver(
     }
 
 }
-
 fun getCar(json:String)
     : Any? {
         return try {
@@ -36,7 +33,3 @@ fun getCar(json:String)
         }
     return null
 }
-@JsonClass(generateAdapter = true)
-data class NameCar(
-    @Json(name = "name") val name: String
-)

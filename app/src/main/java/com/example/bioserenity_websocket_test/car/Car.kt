@@ -1,8 +1,5 @@
 package com.example.bioserenity_websocket_test.car
 
-import com.example.bioserenity_websocket_test.message.MessageReceiver
-import com.example.bioserenity_websocket_test.message.NameCar
-import com.google.gson.Gson
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlin.math.roundToInt
@@ -37,10 +34,13 @@ fun convertToCar(map: Map<String, Any>): Car? {
     // Create and return a Car object
     return Car(brand, name, speedMax, cv, currentSpeed)
 }
-
+@JsonClass(generateAdapter = true)
+data class NameCar(
+    @Json(name = "name") val name: String
+)
 fun convertToNameCar(map: Map<String, Any>): NameCar? {
     // Extract values from the map
     val name = map["name"] as? String ?: return null
-    // Create and return a Car object
+    // Create and return a NameCar object
     return NameCar(name)
 }
