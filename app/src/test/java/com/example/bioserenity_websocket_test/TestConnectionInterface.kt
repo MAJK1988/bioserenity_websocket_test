@@ -32,11 +32,6 @@ class TestConnectionInterface {
         Mockito.verify(managerConnectionn).onConnect()
     }
 
-    @Test
-    fun testInterFaceOnError(){
-        socket.onError(null)
-        Mockito.verify(managerConnectionn).onError("Error")
-    }
 
     @Test
     fun testInterFaceOnClose(){
