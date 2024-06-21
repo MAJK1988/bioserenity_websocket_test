@@ -1,0 +1,31 @@
+package com.example.bioserenity_websocket_test.utils
+
+class Constant {
+
+
+    companion object {
+        val animationTag: String="animationTag"
+        val info: String= "infos"
+        val start: String= "start"
+        val stop: String= "stop"
+        val ItemCar: String="ItemCar"
+        val switchTagStatus: String="switchTagStatus"
+        val switchTag: String="switchTag"
+        val wait: String="wait"
+        val error: String="Error"
+        val connectToWss:String= "Connect to WSS"
+        val connect: String="Connected.!"
+        val closed:String="Closed"
+        val closeConnect = "close connection.!"
+        val status:String ="Status"
+        val url:String= "ws://34.243.113.168:8080/openSocket"//"wss://ws-feed.pro.coinbase.com"
+
+        val autoConnect: String = "Auto connect"
+        val manualConnect: String = "Connect manually"
+        val userToken:Int=42
+        val testCar= "Test Car"
+
+    }
+
+
+}
