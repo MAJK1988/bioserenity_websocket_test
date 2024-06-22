@@ -5,12 +5,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.bioserenity_websocket_test.car.CarView
 import com.example.bioserenity_websocket_test.car.ManagerCarInfo
@@ -18,6 +21,7 @@ import com.example.bioserenity_websocket_test.connection.ConnectionView
 import com.example.bioserenity_websocket_test.connection.ManagerConnection
 import com.example.bioserenity_websocket_test.utils.Constant
 import com.example.bioserenity_websocket_test.utils.TestLog
+
 /**
  * The MainView class defines a composable function MainScreen that uses Jetpack Compose's Scaffold to structure a UI with a top
  * app bar from ConnectionView, a bottom bar, and a central content area. It conditionally displays a list of cars using CarView
@@ -46,21 +50,33 @@ class MainView {
         ) { innerPadding ->
             Box(
                 modifier = Modifier
-                    .padding(innerPadding),
+                    .padding(innerPadding)
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
 
-                ) {
-                if (!managerConnection.status.value.equals(Constant.wait)) {
-                    CarView().CarList(
-                        managerCar = manager
-                    )
-                }
-                else {
+                if (managerConnection.status.value.equals(Constant.wait)) {
                     TestLog.i(
                         tag = tag,
                         message = "Show CircularProgressBar.!",
                         managerConnection.forTest
                     )
                     CircularProgressBar()
+                } else if (managerConnection.status.value.equals(Constant.closeConnect)) {
+                    Text(
+                        text = "Unable to connect to the server WSS.!!!",
+                        style = MaterialTheme.typography.bodyLarge.copy(
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Red
+                        ) // Adjust the text style as needed
+                    )
+
+                } else {
+                    if (!managerConnection.status.value.equals(Constant.wait)) {
+                        CarView().CarList(
+                            managerCar = manager
+                        )
+                    }
                 }
             }
 
