@@ -7,7 +7,11 @@ import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
 import java.lang.Exception
 import java.net.URI
-
+/**
+ * This class ClientSocket extends WebSocketClient and is designed to manage a WebSocket connection.
+ * It has two main interfaces: ConnectionInterface for handling connection events and CarSocketInterface for handling messages.
+ * It includes methods to initialize these interfaces and overrides WebSocketClient methods (onOpen, onMessage, onClose, onError)
+ * to log events and delegate actions to the interfaces if they are initialized. The forTest flag is used for logging purposes.*/
 class ClientSocket(serverUri: URI, var forTest:Boolean) : WebSocketClient(serverUri) {
 
     var tag: String= "ClientSocket"

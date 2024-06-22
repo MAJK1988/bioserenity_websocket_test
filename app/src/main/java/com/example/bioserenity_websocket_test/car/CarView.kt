@@ -39,11 +39,11 @@ import kotlin.math.abs
 import kotlin.math.round
 
 /**
- * This class and its functions use Jetpack Compose to create a dynamic UI for displaying a list of cars. CarList sets up a
- * LazyColumn to render each car as an ItemCard, which handles click events and updates based on user interaction.
- * ItemCard manages the visual representation of each car using a Card component, adjusting its appearance based on whether
- * the car is selected (indexClicked). RowItem formats and displays specific details of each car with titles in bold,
- * ensuring readability and clarity in the UI presentation.*/
+ * The CarView class defines a UI for displaying a list of cars and their details using Jetpack Compose.
+ * It contains a CarList function that displays the cars in a LazyColumn, and an ItemCard function that
+ * creates individual cards for each car, updating the selected car's speed. It also includes a RowItem
+ * function for displaying car details in a row format and an AnimatedLinearProgressIndicator function for
+ * showing the speed progress with an animation.*/
 class CarView {
     var progress: MutableState<Float> = mutableStateOf(0.0f)
 
