@@ -4,6 +4,9 @@ class Constant {
 
 
     companion object {
+        val pleaseTry: String="Not connected. Please try connecting to the server WSS.!!!"
+        val unableToConnect: String="Unable to connect to the server WSS.!!!"
+        val notConnected: String="notConnected"
         val animationTag: String="animationTag"
         val info: String= "infos"
         val start: String= "start"

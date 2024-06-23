@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
 
     var isConnect: MutableState<Boolean> = mutableStateOf(false)
     var isAuto: MutableState<Boolean> = mutableStateOf(false)
-    var status: MutableState<String> = mutableStateOf("Try to connect")
+    var status: MutableState<String> = mutableStateOf(Constant.closeConnect)
     var cars: MutableState<Array<Car>> = mutableStateOf(arrayOf())
     val forTest = false
 
@@ -100,7 +100,7 @@ class MainActivity : ComponentActivity() {
         val socketManager: ManagerConnection =
             ManagerConnection(
                 socket = ClientSocket(URI(""), false),
-                status = mutableStateOf("Try to connect"),
+                status = mutableStateOf(Constant.connect),
                 isConnect = mutableStateOf(true),
                 callback = {},
                 forTest = false,

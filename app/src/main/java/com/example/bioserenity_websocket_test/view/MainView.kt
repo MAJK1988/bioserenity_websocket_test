@@ -13,7 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.bioserenity_websocket_test.car.CarView
 import com.example.bioserenity_websocket_test.car.ManagerCarInfo
@@ -64,7 +66,10 @@ class MainView {
                     CircularProgressBar()
                 } else if (managerConnection.status.value.equals(Constant.closeConnect)) {
                     Text(
-                        text = "Unable to connect to the server WSS.!!!",
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.testTag(Constant.notConnected),
+                        text = if (managerConnection.isAuto.value) Constant.unableToConnect
+                        else Constant.pleaseTry,
                         style = MaterialTheme.typography.bodyLarge.copy(
                             fontWeight = FontWeight.Bold,
                             color = Color.Red

@@ -7,6 +7,7 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -121,6 +122,12 @@ class ManualConnectionTest {
         composeTestRule.onNodeWithTag(
             Constant.connectToWss
         ).assertIsDisplayed()
+        composeTestRule.onNodeWithTag(
+            Constant.notConnected
+        ).assertIsDisplayed()
+        composeTestRule.onNodeWithTag(
+            Constant.notConnected
+        ).assertTextEquals(Constant.pleaseTry)
         //Check if connect to WSS
         composeTestRule.onNodeWithTag(
             Constant.connectToWss
