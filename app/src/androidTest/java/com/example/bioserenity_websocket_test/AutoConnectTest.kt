@@ -23,34 +23,41 @@ class AutoConnectTest {
 
     @Test
     fun  testOpenConnection(){
-        composeTestRule.onNodeWithTag(
-            Constant.switchTag
-        ).assertIsDisplayed()
-        composeTestRule.onNodeWithTag(
-            Constant.switchTag
-        ).performClick()
+        // Ensure the switch button is displayed and click it
+        composeTestRule.onNodeWithTag(Constant.switchTag)
+            .assertIsDisplayed()
+            .performClick()
+
+        // Wait for 1 second
         Thread.sleep(1000)
+
+        // Verify connection status change to open
         Assert.assertTrue("open connection", composeTestRule.activity.isConnect.value)
     }
 
     @Test
-    fun  testOpenConnectionValidationStatus(){
-        composeTestRule.onNodeWithTag(
-            Constant.switchTag
-        ).assertIsDisplayed()
-        composeTestRule.onNodeWithTag(
-            Constant.switchTagStatus
-        ).assertIsDisplayed()
-        composeTestRule.onNodeWithTag(
-            Constant.switchTag
-        ).performClick()
+    fun testOpenConnectionValidationStatus() {
+        // Ensure the switch button and its status text are displayed
+        composeTestRule.onNodeWithTag(Constant.switchTag)
+            .assertIsDisplayed()
+        composeTestRule.onNodeWithTag(Constant.switchTagStatus)
+            .assertIsDisplayed()
+
+        // Click the switch button to connect
+        composeTestRule.onNodeWithTag(Constant.switchTag)
+            .performClick()
+
+        // Wait for 1 second
         Thread.sleep(1000)
+
+        // Verify connection status changes to open
         Assert.assertTrue("open connection", composeTestRule.activity.isConnect.value)
 
-        composeTestRule.onNodeWithTag(
-            Constant.switchTagStatus
-        ).assertTextEquals(Constant.autoConnect)
+        // Assert that the switch status text shows "Auto Connect"
+        composeTestRule.onNodeWithTag(Constant.switchTagStatus)
+            .assertTextEquals(Constant.autoConnect)
     }
+
 
 
 }

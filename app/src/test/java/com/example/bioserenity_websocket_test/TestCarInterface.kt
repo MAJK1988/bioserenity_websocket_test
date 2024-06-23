@@ -14,21 +14,22 @@ import java.net.URI
  * Uses MockitoJUnitRunner to test interactions between ClientSocket and CarSocketInterface implementations.*/
 @RunWith(MockitoJUnitRunner::class)
 class TestCarInterface{
+
+
     @Mock
-    lateinit var carOnMessageInterface: CarSocketInterface
-    lateinit var socket: ClientSocket
+    lateinit var carOnMessageInterface: CarSocketInterface // Mock interface for handling car messages
+    lateinit var socket: ClientSocket // Client socket instance to be tested
 
     @Before
-    fun setup(){
-        socket= ClientSocket(URI(Constant.url),true)
-        socket.initializeCarOnMessageInterface(carOnMessageInterface)
+    fun setup() {
+        socket = ClientSocket(URI(Constant.url), true) // Initialize the client socket with a mock URI
+        socket.initializeCarOnMessageInterface(carOnMessageInterface) // Inject the mock interface into the socket
     }
 
-
     @Test
-    fun testInterFaceOnMessage(){
-        socket.onMessage("null")
-        Mockito.verify(carOnMessageInterface).onMessage("null")
+    fun testInterfaceOnMessage() {
+        socket.onMessage("null") // Simulate receiving a message on the socket
+        Mockito.verify(carOnMessageInterface).onMessage("null")// Verify that the mock interface's onMessage method was called with "null"
     }
 
 }

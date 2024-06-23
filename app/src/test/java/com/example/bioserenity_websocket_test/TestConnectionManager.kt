@@ -29,32 +29,48 @@ class TestConnectionManager {
 
     @Before
     fun setup() {
+        // Initialize MutableState variables and ClientSocket
         isConnect = mutableStateOf(false)
         isAuto = mutableStateOf(false)
         status = mutableStateOf("Try to connect")
-        clientSocket =ClientSocket(URI(Constant.url),true)
+        clientSocket = ClientSocket(URI(Constant.url), true)
         handler = mock(Handler::class.java)
+
+        // Initialize ManagerConnection with mocked dependencies
         manager = ManagerConnection(
             socket = clientSocket,
             status = status,
             isConnect = isConnect,
             callback = {},
-            isAuto = isAuto,true
-        )}
+            isAuto = isAuto,
+            forTest = true
+        )
+    }
 
-        @Test
-        fun testOnOpen() {
-            clientSocket.onOpen(null)
-            assert(isConnect.value)
-            assert(status.value.equals(Constant.connect))
-        }
+    @Test
+    fun testOnOpen() {
+        // Simulate onOpen() method call on clientSocket
+        clientSocket.onOpen(null)
+
+        // Assert that isConnect.value should be true after onOpen()
+        assert(isConnect.value)
+
+        // Assert that status.value should be "Constant.connect" after onOpen()
+        assert(status.value.equals(Constant.connect))
+    }
+
     @Test
     fun testOnClose() {
-        clientSocket.onClose(1,null,true)
+        // Simulate onClose() method call on clientSocket
+        clientSocket.onClose(1, null, true)
+
+        // Assert that isConnect.value should be false after onClose()
         assert(!isConnect.value)
+
+        // Assert that status.value should be "Constant.closeConnect" after onClose()
         assert(status.value.equals(Constant.closeConnect))
     }
+}
 
-    }
 
 

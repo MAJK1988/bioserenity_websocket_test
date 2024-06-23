@@ -21,22 +21,26 @@ class TestConnectionInterface {
     lateinit var socket: ClientSocket
 
     @Before
-    fun setup(){
-        socket= ClientSocket(URI(Constant.url),true)
+    fun setup() {
+        socket = ClientSocket(URI(Constant.url), true)
         socket.initializeConnectionInterface(managerConnectionn)
     }
 
     @Test
-    fun testInterFaceOnOpen(){
+    fun testInterFaceOnOpen() {
+        // Simulate onOpen event
         socket.onOpen(null)
+
+        // Verify that onConnect method is called on managerConnectionn
         Mockito.verify(managerConnectionn).onConnect()
     }
 
-
     @Test
-    fun testInterFaceOnClose(){
-        socket.onClose(1,null,true)
+    fun testInterFaceOnClose() {
+        // Simulate onClose event
+        socket.onClose(1, null, true)
+
+        // Verify that onClose method is called on managerConnectionn
         Mockito.verify(managerConnectionn).onClose()
     }
-
 }

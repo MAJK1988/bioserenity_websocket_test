@@ -28,15 +28,17 @@ class TestCarManager {
     lateinit var cars: MutableState<Array<Car>>
     lateinit var clientSocket: ClientSocket
 
-
     @Before
     fun setup() {
         cars = mutableStateOf(arrayOf())
+
+        // Mock dependencies
         clientSocket = ClientSocket(URI(Constant.url), true)
         managerConnection = ManagerConnection(
             socket = clientSocket,
             status = mutableStateOf(""),
-            isConnect = mutableStateOf(false), callback = {},
+            isConnect = mutableStateOf(false),
+            callback = {},
             isAuto = mutableStateOf(false),
             forTest = true
         )
@@ -50,6 +52,7 @@ class TestCarManager {
 
     @Test
     fun testOnMessage() {
+        // Create a test message in JSON format
         val testMessage = MessageReceiver(
             type = "start",
             userToken = 42,
@@ -63,10 +66,15 @@ class TestCarManager {
                 )
             )
         ).toJson()
-        clientSocket.onMessage(testMessage)
-        manager.addCarToList(testMessage)
-        assert(cars.value.isNotEmpty())
-        assert(cars.value[0].name == "name")
-    }
 
+        // Simulate receiving the message on the client socket
+        clientSocket.onMessage(testMessage)
+
+        // Add the car to the manager's list
+        manager.addCarToList(testMessage)
+
+        // Assertions
+        assert(cars.value.isNotEmpty()) // Check if cars list is not empty
+        assert(cars.value[0].name == "name") // Check if the first car's name matches expected
+    }
 }

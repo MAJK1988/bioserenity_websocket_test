@@ -18,51 +18,89 @@ and gracefully handles invalid JSON input by returning null. This helps maintain
 JSON data within your application.
  */
 class TestJsonConvert {
+
     @Test
     fun testGetCarValidateJsonCar() {
+        // Create a sample Car object
         val car = Car(
-            name = "catTest", brand = "M",
-            speedMax = 1.0, currentSpeed = 1.0, cv = 1
+            name = "catTest",
+            brand = "M",
+            speedMax = 1.0,
+            currentSpeed = 1.0,
+            cv = 1
         )
-        val messageReceiver = MessageReceiver(type = "start", userToken = 42, payload = car)
+
+        // Create a MessageReceiver with the Car payload and convert to JSON
+        val messageReceiver = MessageReceiver(
+            type = "start",
+            userToken = 42,
+            payload = car
+        )
         val json = messageReceiver.toJson()
 
-        val result =convertToCar(map= getCar(json) as Map<String, Any>)
+        // Convert JSON back to Car object and validate
+        val result = convertToCar(map = getCar(json) as Map<String, Any>)
         assertNotNull(result)
         assertEquals(car.name, result?.name)
     }
+
     @Test
     fun testGetCarValidateJsonListCar() {
+        // Create a sample Car object in a list
         val car = Car(
-            name = "catTest", brand = "M",
-            speedMax = 1.0, currentSpeed = 1.0, cv = 1
+            name = "catTest",
+            brand = "M",
+            speedMax = 1.0,
+            currentSpeed = 1.0,
+            cv = 1
         )
-        val messageReceiver = MessageReceiver(type = "start", userToken = 42, payload = listOf(car))
+
+        // Create a MessageReceiver with the list of Cars payload and convert to JSON
+        val messageReceiver = MessageReceiver(
+            type = "start",
+            userToken = 42,
+            payload = listOf(car)
+        )
         val json = messageReceiver.toJson()
 
-        val result =convertToCar(map= (getCar(json) as List<*>)[0] as Map<String, Any>)
+        // Convert JSON list back to Car object and validate
+        val result = convertToCar(map = (getCar(json) as List<*>)[0] as Map<String, Any>)
         assertNotNull(result)
         assertEquals(car.name, result?.name)
     }
 
     @Test
     fun testGetCarValidateJsonCarName() {
-        val car =  NameCar(name = "test")
-        val messageReceiver = MessageReceiver(type = "start", userToken = 42, payload =car )
+        // Create a sample NameCar object
+        val car = NameCar(name = "test")
+
+        // Create a MessageReceiver with the NameCar payload and convert to JSON
+        val messageReceiver = MessageReceiver(
+            type = "start",
+            userToken = 42,
+            payload = car
+        )
         val json = messageReceiver.toJson()
 
-        val result =convertToNameCar(map= (getCar(json))as Map<String, Any>)
+        // Convert JSON back to NameCar object and validate
+        val result = convertToNameCar(map = getCar(json) as Map<String, Any>)
         assertNotNull(result)
         assertEquals(car.name, result?.name)
     }
 
     @Test
     fun testGetCarInvalidJson() {
+        // Provide an invalid JSON string
         val json = "{invalid json}"
+
+        // Attempt to parse invalid JSON
         val result = getCar(json)
+
+        // Ensure result is null for invalid JSON
         assertNull(result)
     }
 
 }
+
 
 
