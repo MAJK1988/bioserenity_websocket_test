@@ -12,26 +12,21 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.bioserenity_websocket_test.car.ManagerCarInfo
-import com.example.bioserenity_websocket_test.connection.ManagerConnection
-import com.example.bioserenity_websocket_test.utils.Utils
-import com.example.bioserenity_websocket_test.car.Car
-import com.example.bioserenity_websocket_test.utils.Constant
+import com.example.bioserenity_websocket_test.data.repository.ManagerCarInfo
+import com.example.bioserenity_websocket_test.data.repository.ManagerConnection
+import com.example.bioserenity_websocket_test.data.utils.Utils
+import com.example.bioserenity_websocket_test.data.model.Car
+import com.example.bioserenity_websocket_test.data.utils.Constant
 import com.example.bioserenity_websocket_test.ui.theme.Bioserenity_websocket_testTheme
-import com.example.bioserenity_websocket_test.utils.TestLog
+import com.example.bioserenity_websocket_test.data.utils.TestLog
 import com.example.bioserenity_websocket_test.view.MainView
-import com.example.bioserenity_websocket_test.websockt.ClientSocket
+import com.example.bioserenity_websocket_test.data.websockt.ClientSocket
 import java.net.URI
 
 class MainActivity : ComponentActivity() {
     lateinit var managerCar: ManagerCarInfo
     lateinit var connectionManager: ManagerConnection
     lateinit var socketMut: ClientSocket
-
-    var isConnect: MutableState<Boolean> = mutableStateOf(false)
-    var isAuto: MutableState<Boolean> = mutableStateOf(false)
-    var status: MutableState<String> = mutableStateOf(Constant.closeConnect)
-    var cars: MutableState<Array<Car>> = mutableStateOf(arrayOf())
     val forTest = false
 
 
@@ -41,14 +36,11 @@ class MainActivity : ComponentActivity() {
 
             socketMut = ClientSocket(URI(Constant.url), forTest)
             connectionManager = ManagerConnection(
-                isAuto = isAuto,
                 socket = socketMut,
-                status = status,
-                isConnect = isConnect,
+
                 callback = { reCreateSocket() }, forTest = forTest
             )
             managerCar = ManagerCarInfo(
-                cars = cars,
                 socket = socketMut,
                 forTest = forTest,
                 managerConnection = connectionManager
@@ -61,7 +53,12 @@ class MainActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
+
         setContent {
+            if(connectionManager.isConnectS.value!!){
+                TestLog.i(tag= "onStartLog", message = "Is open", forTest=false)
+            }else{ TestLog.i(tag= "onStartLog", message = "Is close", forTest=false)}
+
             Bioserenity_websocket_testTheme(darkTheme = false) {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -100,15 +97,11 @@ class MainActivity : ComponentActivity() {
         val socketManager: ManagerConnection =
             ManagerConnection(
                 socket = ClientSocket(URI(""), false),
-                status = mutableStateOf(Constant.connect),
-                isConnect = mutableStateOf(true),
                 callback = {},
                 forTest = false,
-                isAuto = mutableStateOf(false)
             )
         val managerCar: ManagerCarInfo =
             ManagerCarInfo(
-                cars = cars,
                 socket = ClientSocket(URI(""), false),
                 false,
                 managerConnection = socketManager

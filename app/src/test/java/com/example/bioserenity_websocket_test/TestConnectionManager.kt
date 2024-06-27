@@ -3,9 +3,9 @@ package com.example.bioserenity_websocket_test
 import android.os.Handler
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import com.example.bioserenity_websocket_test.connection.ManagerConnection
-import com.example.bioserenity_websocket_test.utils.Constant
-import com.example.bioserenity_websocket_test.websockt.ClientSocket
+import com.example.bioserenity_websocket_test.data.repository.ManagerConnection
+import com.example.bioserenity_websocket_test.data.utils.Constant
+import com.example.bioserenity_websocket_test.data.websockt.ClientSocket
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

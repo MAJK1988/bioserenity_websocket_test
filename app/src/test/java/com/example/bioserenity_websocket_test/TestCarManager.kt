@@ -2,12 +2,12 @@ package com.example.bioserenity_websocket_test
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import com.example.bioserenity_websocket_test.car.ManagerCarInfo
-import com.example.bioserenity_websocket_test.car.Car
-import com.example.bioserenity_websocket_test.connection.ManagerConnection
-import com.example.bioserenity_websocket_test.utils.MessageReceiver
-import com.example.bioserenity_websocket_test.utils.Constant
-import com.example.bioserenity_websocket_test.websockt.ClientSocket
+import com.example.bioserenity_websocket_test.data.repository.ManagerCarInfo
+import com.example.bioserenity_websocket_test.data.model.Car
+import com.example.bioserenity_websocket_test.data.repository.ManagerConnection
+import com.example.bioserenity_websocket_test.data.model.MessageReceiver
+import com.example.bioserenity_websocket_test.data.utils.Constant
+import com.example.bioserenity_websocket_test.data.websockt.ClientSocket
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

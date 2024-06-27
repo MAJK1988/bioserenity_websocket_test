@@ -1,12 +1,12 @@
 package com.example.bioserenity_websocket_test
 
 
-import com.example.bioserenity_websocket_test.car.Car
-import com.example.bioserenity_websocket_test.car.NameCar
-import com.example.bioserenity_websocket_test.car.convertToCar
-import com.example.bioserenity_websocket_test.car.convertToNameCar
-import com.example.bioserenity_websocket_test.utils.MessageReceiver
-import com.example.bioserenity_websocket_test.utils.getCar
+import com.example.bioserenity_websocket_test.data.model.Car
+import com.example.bioserenity_websocket_test.data.model.NameCar
+import com.example.bioserenity_websocket_test.data.model.convertToCar
+import com.example.bioserenity_websocket_test.data.model.convertToNameCar
+import com.example.bioserenity_websocket_test.data.model.MessageReceiver
+import com.example.bioserenity_websocket_test.data.model.getCar
 import org.junit.Test
 import org.junit.Assert.*
 

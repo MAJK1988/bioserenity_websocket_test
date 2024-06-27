@@ -17,12 +17,12 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.bioserenity_websocket_test.car.CarView
-import com.example.bioserenity_websocket_test.car.ManagerCarInfo
-import com.example.bioserenity_websocket_test.connection.ConnectionView
-import com.example.bioserenity_websocket_test.connection.ManagerConnection
-import com.example.bioserenity_websocket_test.utils.Constant
-import com.example.bioserenity_websocket_test.utils.TestLog
+import com.example.bioserenity_websocket_test.data.repository.ManagerCarInfo
+import com.example.bioserenity_websocket_test.view.connection.ConnectionView
+import com.example.bioserenity_websocket_test.data.repository.ManagerConnection
+import com.example.bioserenity_websocket_test.data.utils.Constant
+import com.example.bioserenity_websocket_test.data.utils.TestLog
+import com.example.bioserenity_websocket_test.view.Car.CarView
 
 /**
  * The MainView class defines a composable function MainScreen that uses Jetpack Compose's Scaffold to structure a UI with a top
@@ -64,7 +64,7 @@ class MainView {
                         managerConnection.forTest
                     )
                     CircularProgressBar()
-                } else if (managerConnection.status.value.equals(Constant.closeConnect)) {
+                } else if (!managerConnection.isConnectS.value!!) {
                     Text(
                         textAlign = TextAlign.Center,
                         modifier = Modifier.testTag(Constant.notConnected),

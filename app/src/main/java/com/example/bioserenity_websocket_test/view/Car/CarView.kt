@@ -1,4 +1,4 @@
-package com.example.bioserenity_websocket_test.car
+package com.example.bioserenity_websocket_test.view.Car
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -33,8 +33,10 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.bioserenity_websocket_test.utils.Constant
-import com.example.bioserenity_websocket_test.utils.TestLog
+import com.example.bioserenity_websocket_test.data.model.Car
+import com.example.bioserenity_websocket_test.data.repository.ManagerCarInfo
+import com.example.bioserenity_websocket_test.data.utils.Constant
+import com.example.bioserenity_websocket_test.data.utils.TestLog
 import kotlin.math.abs
 import kotlin.math.round
 
@@ -54,7 +56,7 @@ class CarView {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            items(managerCar.cars.value.toList()) { car ->
+            items(managerCar.carsT.value.toList()) { car ->
                 ItemCard(
                     item = car,
                     callBack = {

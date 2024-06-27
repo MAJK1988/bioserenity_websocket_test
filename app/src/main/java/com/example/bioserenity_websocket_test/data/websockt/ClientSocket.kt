@@ -1,8 +1,9 @@
-package com.example.bioserenity_websocket_test.websockt
+package com.example.bioserenity_websocket_test.data.websockt
 
-import com.example.bioserenity_websocket_test.car.CarSocketInterface
-import com.example.bioserenity_websocket_test.connection.ConnectionInterface
-import com.example.bioserenity_websocket_test.utils.TestLog
+
+import com.example.bioserenity_websocket_test.data.utils.TestLog
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
 import java.lang.Exception
@@ -14,53 +15,45 @@ import java.net.URI
  * to log events and delegate actions to the interfaces if they are initialized. The forTest flag is used for logging purposes.*/
 class ClientSocket(serverUri: URI, var forTest:Boolean) : WebSocketClient(serverUri) {
 
+
+
+
+    private val _messages = MutableStateFlow("")
+    val messages: StateFlow<String> get() = _messages
+
+    private val _status = MutableStateFlow(0)
+    val status: StateFlow<Int> get() = _status
+
+
     var tag: String= "ClientSocket"
-    lateinit var connectionInterface: ConnectionInterface
-     fun initializeConnectionInterface(conn: ConnectionInterface){
-         connectionInterface=conn
-    }
 
-    lateinit var  carMessage: CarSocketInterface
-
-     fun initializeCarOnMessageInterface(car: CarSocketInterface){
-        carMessage=car
-    }
 
     override fun onOpen(handshakedata: ServerHandshake?) {
          TestLog.i(tag=tag, message = "onOpen.!!",forTest)
-        if(::connectionInterface.isInitialized){
-            connectionInterface.onConnect()
-        }
+        _status.value=1
+
+
 
     }
 
     override fun onMessage(message: String?) {
         TestLog.i(tag=tag, message = "onMessage: $message",forTest)
-        if(::carMessage.isInitialized) {
-            carMessage.onMessage(message)
-        }else{
-            TestLog.e(tag=tag, message= "Error.!",forTest)
+
+        if(message!=null) {
+            _messages.value =message
         }
-        //TestLog.i(tag,"message: $message")
 
     }
 
     override fun onClose(code: Int, reason: String?, remote: Boolean) {
         TestLog.i(tag=tag, message = "onClose.!!",forTest)
-        if(::connectionInterface.isInitialized){
-            connectionInterface.onClose()
-        }
+
+        _status.value=0
     }
 
     override fun onError(ex: Exception?) {
         TestLog.i(tag=tag, message = "onError: ${ex!!.printStackTrace()}",forTest)
-        if(::connectionInterface.isInitialized){
-            if (ex != null) {
-                ex.message?.let { connectionInterface.onError(it) }
-            }else{
-                connectionInterface.onError("Error")
-            }
-        }
 
+        _status.value=-1
     }
 }

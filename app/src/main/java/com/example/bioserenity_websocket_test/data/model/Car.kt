@@ -1,4 +1,4 @@
-package com.example.bioserenity_websocket_test.car
+package com.example.bioserenity_websocket_test.data.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

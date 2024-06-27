@@ -1,4 +1,4 @@
-package com.example.bioserenity_websocket_test.utils
+package com.example.bioserenity_websocket_test.data.model
 
 import com.google.gson.Gson
 import com.squareup.moshi.Json

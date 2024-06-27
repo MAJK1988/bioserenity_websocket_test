@@ -1,15 +1,12 @@
 package com.example.bioserenity_websocket_test
 
-import androidx.compose.ui.semantics.SemanticsProperties
-import androidx.compose.ui.semantics.getOrNull
-import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.bioserenity_websocket_test.utils.Constant
+import com.example.bioserenity_websocket_test.data.utils.Constant
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test

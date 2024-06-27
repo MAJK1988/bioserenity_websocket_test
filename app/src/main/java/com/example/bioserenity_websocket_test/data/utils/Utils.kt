@@ -1,4 +1,4 @@
-package com.example.bioserenity_websocket_test.utils
+package com.example.bioserenity_websocket_test.data.utils
 
 import java.net.URI
 import java.net.URISyntaxException

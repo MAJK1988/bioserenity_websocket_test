@@ -1,4 +1,4 @@
-package com.example.bioserenity_websocket_test.connection
+package com.example.bioserenity_websocket_test.view.connection
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -13,11 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.bioserenity_websocket_test.utils.Constant
+import com.example.bioserenity_websocket_test.data.repository.ManagerConnection
+import com.example.bioserenity_websocket_test.data.utils.Constant
 /**The ConnectionView class provides composable functions for displaying connection-related controls in a UI.
  * The TopBarView function creates a top bar with a switch to toggle automatic connection mode,
  * updating the state and initiating auto-connection if enabled. The BottomBarView function conditionally displays
@@ -67,7 +67,7 @@ class ConnectionView {
                     .padding(8.dp),
 
                 onClick = {
-                    if (!managerConnection.isConnect.value) {
+                    if (!managerConnection.isConnectS.value) {
                         managerConnection.connect()
                     } else {
                         managerConnection.closeConnection()
@@ -77,7 +77,7 @@ class ConnectionView {
                 ) {
                 Text(
                     modifier = Modifier.testTag(Constant.status),
-                    text = if (!managerConnection.isConnect.value) Constant.connectToWss else
+                    text = if (!managerConnection.isConnectS.value) Constant.connectToWss else
                         Constant.closeConnect,
                     fontSize = 20.sp
 
@@ -90,7 +90,7 @@ class ConnectionView {
                     .fillMaxWidth()
                     .padding(8.dp),
                 textAlign = TextAlign.Center,
-                text = if (managerConnection.isConnect.value) Constant.connect else
+                text = if (managerConnection.isConnectS.value) Constant.connect else
                     Constant.closed
             )
         }

@@ -1,12 +1,17 @@
-package com.example.bioserenity_websocket_test.connection
+package com.example.bioserenity_websocket_test.data.repository
 
 import android.os.Handler
 import android.os.Looper
 import androidx.compose.runtime.MutableState
-import com.example.bioserenity_websocket_test.utils.MessageReceiver
-import com.example.bioserenity_websocket_test.utils.TestLog
-import com.example.bioserenity_websocket_test.utils.Constant
-import com.example.bioserenity_websocket_test.websockt.ClientSocket
+import androidx.compose.runtime.mutableStateOf
+import com.example.bioserenity_websocket_test.data.model.MessageReceiver
+import com.example.bioserenity_websocket_test.data.utils.Constant
+import com.example.bioserenity_websocket_test.data.utils.TestLog
+import com.example.bioserenity_websocket_test.data.websockt.ClientSocket
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
 /**
  * ManagerConnection is a Kotlin class that manages a WebSocket connection, maintaining the connection status and handling
  * automatic reconnections. It initializes and configures the WebSocket, provides methods to connect and disconnect,
@@ -14,21 +19,54 @@ import com.example.bioserenity_websocket_test.websockt.ClientSocket
  * through the WebSocket and logs connection activities for debugging purposes.**/
 class ManagerConnection(
     var socket: ClientSocket,
-    var status: MutableState<String>,
-    var isConnect: MutableState<Boolean>,
     private val callback: () -> Unit,
-    var isAuto: MutableState<Boolean>, var forTest:Boolean
-) : ConnectionInterface {
+
+    var forTest:Boolean
+)  {
     val tag: String = "ManagerConnection"
     lateinit var usedSocket: ClientSocket
-
+    val isConnectS: MutableState<Boolean> = mutableStateOf(false)
+    var isAuto: MutableState<Boolean> = mutableStateOf(false)
+    val status: MutableState<String> =  mutableStateOf(Constant.closeConnect)
     init {
         initializeUsedSocket(socket)
     }
 
     fun initializeUsedSocket(s: ClientSocket) {
         usedSocket = s
-        usedSocket.initializeConnectionInterface(this)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            usedSocket.status.collect { message ->
+                if(message==1){
+                    isConnectS.value=true
+                    changeConnectionStatus(
+                        message = Constant.connect,
+                        status = true
+                    )
+                    sendMessage(MessageReceiver(type= Constant.info,userToken= 42 ).toJson())
+                }else if (message ==0){
+                    isConnectS.value=false
+                    changeConnectionStatus(
+                        message = Constant.closeConnect,
+                        status = false
+                    )
+                    callback()
+                    if (isAuto.value) {
+                        autoConnection()
+                    }
+                }else{
+                    changeConnectionStatus(
+                        message = Constant.error,
+                        status = !usedSocket.isClosed
+                    )
+                    if (isAuto.value && ::usedSocket.isInitialized && usedSocket.isClosed) {
+                        autoConnection()
+                    }
+                }
+            }
+        }
+
+
     }
 
     private val connectObject = Object()
@@ -37,9 +75,9 @@ class ManagerConnection(
     fun connect(): Boolean {
         synchronized(connectObject)
         {
-            if (::usedSocket.isInitialized && !isConnect.value) {
+            if (::usedSocket.isInitialized && !isConnectS.value) {
                 try {
-                    status.value=Constant.wait
+                    status.value= Constant.wait
                     usedSocket.connectBlocking()
                     return true
                 } catch (ex: Exception) {
@@ -55,8 +93,8 @@ class ManagerConnection(
 
         if (::usedSocket.isInitialized && !usedSocket.isClosed) {
             try {
-                status.value=Constant.wait
-                sendMessage( MessageReceiver(type=Constant.stop,userToken= 42 ).toJson())
+                status.value= Constant.wait
+                sendMessage( MessageReceiver(type= Constant.stop,userToken= 42 ).toJson())
                 Thread.sleep(10)
                 usedSocket.close()
             } catch (ex: Exception) {
@@ -74,34 +112,8 @@ class ManagerConnection(
 
 
 
-    override fun onConnect() {
-        changeConnectionStatus(
-            message = Constant.connect,
-            status = true
-        )
-        sendMessage(MessageReceiver(type=Constant.info,userToken= 42 ).toJson())
-    }
 
-    override fun onClose() {
-        changeConnectionStatus(
-            message = Constant.closeConnect,
-            status = false
-        )
-        callback()
-        if (isAuto.value) {
-            autoConnection()
-        }
-    }
 
-    override fun onError(error: String) {
-        changeConnectionStatus(
-            message = Constant.error,
-            status = !usedSocket.isClosed
-        )
-        if (isAuto.value && ::usedSocket.isInitialized && usedSocket.isClosed) {
-            autoConnection()
-        }
-    }
 
 
     @Synchronized
@@ -116,13 +128,13 @@ class ManagerConnection(
 
     private fun close(message: String) {
         status.value = message
-        isConnect.value = false
+
         TestLog.i(tag, "close connection.!",forTest)
     }
 
     private fun open(message: String) {
         status.value = message
-        isConnect.value = true
+
         TestLog.i(tag, "Open connection.!",forTest)
     }
 
