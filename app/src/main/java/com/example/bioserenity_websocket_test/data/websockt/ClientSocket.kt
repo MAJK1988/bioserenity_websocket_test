@@ -15,45 +15,33 @@ import java.net.URI
  * to log events and delegate actions to the interfaces if they are initialized. The forTest flag is used for logging purposes.*/
 class ClientSocket(serverUri: URI, var forTest:Boolean) : WebSocketClient(serverUri) {
 
-
-
-
     private val _messages = MutableStateFlow("")
     val messages: StateFlow<String> get() = _messages
 
     private val _status = MutableStateFlow(0)
     val status: StateFlow<Int> get() = _status
 
-
     var tag: String= "ClientSocket"
-
 
     override fun onOpen(handshakedata: ServerHandshake?) {
          TestLog.i(tag=tag, message = "onOpen.!!",forTest)
         _status.value=1
-
-
-
     }
 
     override fun onMessage(message: String?) {
         TestLog.i(tag=tag, message = "onMessage: $message",forTest)
-
         if(message!=null) {
             _messages.value =message
         }
-
     }
 
     override fun onClose(code: Int, reason: String?, remote: Boolean) {
         TestLog.i(tag=tag, message = "onClose.!!",forTest)
-
         _status.value=0
     }
 
     override fun onError(ex: Exception?) {
         TestLog.i(tag=tag, message = "onError: ${ex!!.printStackTrace()}",forTest)
-
         _status.value=-1
     }
 }

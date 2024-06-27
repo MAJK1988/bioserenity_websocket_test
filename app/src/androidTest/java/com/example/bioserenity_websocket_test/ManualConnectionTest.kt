@@ -39,8 +39,10 @@ class ManualConnectionTest {
             Constant.connectToWss
         ).performClick()
         Thread.sleep(1000)
-        assertTrue("open connection",
-            composeTestRule.activity.isConnect.value)
+        assertTrue(
+            "open connection",
+            composeTestRule.activity.connectionManager.isConnectS.value
+        )
 
     }
 
@@ -58,7 +60,10 @@ class ManualConnectionTest {
         Thread.sleep(1000)
 
         // Verify connection status change to open
-        assertTrue("Connection should be open", composeTestRule.activity.isConnect.value)
+        assertTrue(
+            "Connection should be open",
+            composeTestRule.activity.connectionManager.isConnectS.value
+        )
 
         // Click the button to close the connection
         composeTestRule.onNodeWithTag(Constant.connectToWss)
@@ -68,7 +73,10 @@ class ManualConnectionTest {
         Thread.sleep(3000)
 
         // Verify connection status change to closed
-        assertTrue("Connection should be closed", !composeTestRule.activity.isConnect.value)
+        assertTrue(
+            "Connection should be closed",
+            !composeTestRule.activity.connectionManager.isConnectS.value
+        )
     }
 
     @Test
@@ -85,7 +93,10 @@ class ManualConnectionTest {
         Thread.sleep(1000)
 
         // Verify connection status change to open
-        assertTrue("Connection should be open", composeTestRule.activity.isConnect.value)
+        assertTrue(
+            "Connection should be open",
+            composeTestRule.activity.connectionManager.isConnectS.value
+        )
 
         // Click the button to close the connection
         composeTestRule.onNodeWithTag(Constant.connectToWss)
@@ -95,7 +106,10 @@ class ManualConnectionTest {
         Thread.sleep(3000)
 
         // Verify connection status change to closed
-        assertTrue("Connection should be closed", !composeTestRule.activity.isConnect.value)
+        assertTrue(
+            "Connection should be closed",
+            !composeTestRule.activity.connectionManager.isConnectS.value
+        )
 
         // Click the button to establish connection again
         composeTestRule.onNodeWithTag(Constant.connectToWss)
@@ -105,7 +119,10 @@ class ManualConnectionTest {
         Thread.sleep(1000)
 
         // Verify connection status change to open again
-        assertTrue("Connection should be open", composeTestRule.activity.isConnect.value)
+        assertTrue(
+            "Connection should be open",
+            composeTestRule.activity.connectionManager.isConnectS.value
+        )
     }
 
 
@@ -123,13 +140,16 @@ class ManualConnectionTest {
         Thread.sleep(1000)
 
         // Verify connection status change to open
-        assertTrue("Connection should be open", composeTestRule.activity.isConnect.value)
+        assertTrue(
+            "Connection should be open",
+            composeTestRule.activity.connectionManager.isConnectS.value
+        )
 
         // Wait for 5 seconds for cars to be added
         Thread.sleep(5000)
 
         // Check if cars have been added to the list
-        val carsListSize = composeTestRule.activity.managerCar.cars.value.size
+        val carsListSize = composeTestRule.activity.managerCar.carsT.value.size
         assertTrue("The cars list should not be empty", carsListSize > 0)
     }
 
@@ -152,14 +172,20 @@ class ManualConnectionTest {
         Thread.sleep(1000)
 
         // Verify connection status change to open
-        assertTrue("Connection should be open", composeTestRule.activity.isConnect.value)
+        assertTrue(
+            "Connection should be open",
+            composeTestRule.activity.connectionManager.isConnectS.value
+        )
 
         // Wait for 5 seconds for cars to be added
         Thread.sleep(5000)
-        assertTrue("The cars list should not be empty", composeTestRule.activity.managerCar.cars.value.isNotEmpty())
+        assertTrue(
+            "The cars list should not be empty",
+            composeTestRule.activity.managerCar.carsT.value.isNotEmpty()
+        )
 
         // Click on the first car item
-        val firstCarCV = composeTestRule.activity.managerCar.cars.value[0].cv
+        val firstCarCV = composeTestRule.activity.managerCar.carsT.value[0].cv
         composeTestRule.onNodeWithTag(Constant.ItemCar + firstCarCV)
             .assertIsDisplayed()
             .performClick()
@@ -168,7 +194,7 @@ class ManualConnectionTest {
         Thread.sleep(1000)
 
         // Assert that the current speed is not 0.0
-        assert(composeTestRule.activity.managerCar.cars.value[0].currentSpeed != 0.0)
+        assert(composeTestRule.activity.managerCar.carsT.value[0].currentSpeed != 0.0)
 
         // Check if the progress bar animation is activated
         composeTestRule.onNodeWithTag(Constant.animationTag)
@@ -188,14 +214,20 @@ class ManualConnectionTest {
         Thread.sleep(1000)
 
         // Verify connection status change to open
-        assertTrue("Connection should be open", composeTestRule.activity.isConnect.value)
+        assertTrue(
+            "Connection should be open",
+            composeTestRule.activity.connectionManager.isConnectS.value
+        )
 
         // Wait for 5 seconds for cars to be added
         Thread.sleep(5000)
-        assertTrue("The cars list should not be empty", composeTestRule.activity.managerCar.cars.value.isNotEmpty())
+        assertTrue(
+            "The cars list should not be empty",
+            composeTestRule.activity.managerCar.carsT.value.isNotEmpty()
+        )
 
         // Click on the first car item to start receiving speed data
-        val firstCarCV = composeTestRule.activity.managerCar.cars.value[0].cv
+        val firstCarCV = composeTestRule.activity.managerCar.carsT.value[0].cv
         composeTestRule.onNodeWithTag(Constant.ItemCar + firstCarCV)
             .assertIsDisplayed()
             .performClick()
@@ -204,7 +236,7 @@ class ManualConnectionTest {
         Thread.sleep(1000)
 
         // Assert that the current speed is not 0.0 and progress bar animation is displayed
-        assert(composeTestRule.activity.managerCar.cars.value[0].currentSpeed != 0.0)
+        assert(composeTestRule.activity.managerCar.carsT.value[0].currentSpeed != 0.0)
         composeTestRule.onNodeWithTag(Constant.animationTag)
             .assertIsDisplayed()
             .assert(hasProgressBar())

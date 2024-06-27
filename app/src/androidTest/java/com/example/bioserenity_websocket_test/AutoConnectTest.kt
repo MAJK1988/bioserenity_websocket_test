@@ -11,6 +11,7 @@ import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+
 /**
  * This class tests UI interactions and state updates related to WebSocket connection management in a Jetpack Compose application.*/
 @RunWith(AndroidJUnit4::class)
@@ -19,7 +20,7 @@ class AutoConnectTest {
     val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     @Test
-    fun  testOpenConnection(){
+    fun testOpenConnection() {
         // Ensure the switch button is displayed and click it
         composeTestRule.onNodeWithTag(Constant.switchTag)
             .assertIsDisplayed()
@@ -29,7 +30,10 @@ class AutoConnectTest {
         Thread.sleep(1000)
 
         // Verify connection status change to open
-        Assert.assertTrue("open connection", composeTestRule.activity.isConnect.value)
+        Assert.assertTrue(
+            "open connection",
+            composeTestRule.activity.connectionManager.isConnectS.value
+        )
     }
 
     @Test
@@ -48,13 +52,15 @@ class AutoConnectTest {
         Thread.sleep(1000)
 
         // Verify connection status changes to open
-        Assert.assertTrue("open connection", composeTestRule.activity.isConnect.value)
+        Assert.assertTrue(
+            "open connection",
+            composeTestRule.activity.connectionManager.isConnectS.value
+        )
 
         // Assert that the switch status text shows "Auto Connect"
         composeTestRule.onNodeWithTag(Constant.switchTagStatus)
             .assertTextEquals(Constant.autoConnect)
     }
-
 
 
 }

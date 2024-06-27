@@ -36,14 +36,10 @@ class TestCarManager {
         clientSocket = ClientSocket(URI(Constant.url), true)
         managerConnection = ManagerConnection(
             socket = clientSocket,
-            status = mutableStateOf(""),
-            isConnect = mutableStateOf(false),
             callback = {},
-            isAuto = mutableStateOf(false),
             forTest = true
         )
         manager = ManagerCarInfo(
-            cars = cars,
             clientSocket,
             forTest = true,
             managerConnection = managerConnection

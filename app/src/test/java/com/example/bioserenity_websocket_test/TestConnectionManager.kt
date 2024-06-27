@@ -39,10 +39,7 @@ class TestConnectionManager {
         // Initialize ManagerConnection with mocked dependencies
         manager = ManagerConnection(
             socket = clientSocket,
-            status = status,
-            isConnect = isConnect,
             callback = {},
-            isAuto = isAuto,
             forTest = true
         )
     }
